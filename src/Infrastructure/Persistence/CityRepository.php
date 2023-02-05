@@ -5,6 +5,7 @@ namespace Infrastructure\Persistence;
 
 use Domain\Model\City;
 use Infrastructure\Database\DatabaseConnection;
+use PDO;
 
 class CityRepository extends Repository
 {
@@ -15,12 +16,16 @@ class CityRepository extends Repository
         $this->connection = $connection;
     }
 
-    public function search(string $searchText): array
+    public function search(string $searchText, int $limit = 5): array
     {
         $query = $this->connection->getConnection()
-            ->prepare('SELECT * FROM city WHERE SOUNDEX(city) = SOUNDEX(:city)');
+            ->prepare('SELECT `id`, `city`, `lat`, `lng`, `country` 
+                FROM `city` WHERE SOUNDEX(`city`.`city`) = SOUNDEX(:city) LIMIT :limit');
 
-        $query->execute(['city' => $searchText]);
+        $query->bindValue('city', $searchText);
+        $query->bindValue('limit', $limit, PDO::PARAM_INT);
+        $query->execute();
+
         $cities = $query->fetchAll();
 
         foreach ($cities as &$city) {

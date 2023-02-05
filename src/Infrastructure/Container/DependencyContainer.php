@@ -39,10 +39,6 @@ class DependencyContainer
         return $this->request;
     }
 
-    public function getDatabase(): Database {
-        return $this->database;
-    }
-
     public function getCityRepository(): CityRepository {
         return new CityRepository($this->database);
     }

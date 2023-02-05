@@ -28,7 +28,7 @@ $action = $controllerAction['action'];
 try {
     $controller->$action();
 } catch (RuntimeException $exception) {
-    http_response_code(503);
+    http_response_code(400);
     echo json_encode(['error' => $exception->getMessage()]);
     die();
 }

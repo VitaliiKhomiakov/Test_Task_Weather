@@ -8,6 +8,7 @@ use Infrastructure\Container\DependencyContainer;
 use JetBrains\PhpStorm\NoReturn;
 
 class HomeController extends BaseController {
+
     public function __construct(DependencyContainer $container) {}
 
     public function home(): void {
