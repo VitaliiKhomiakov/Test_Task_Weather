@@ -33,8 +33,7 @@ class Database extends DatabaseConnection {
         }
     }
 
-    public static function connect(DatabaseConfigDTO $options): Database
-    {
+    public static function connect(DatabaseConfigDTO $options): Database {
         if (self::$db === null)
         {
             self::$db = new Database($options);
@@ -43,8 +42,7 @@ class Database extends DatabaseConnection {
         return self::$db;
     }
 
-    public function getConnection(): PDO
-    {
+    public function getConnection(): PDO {
         return $this->connect;
     }
 
@@ -53,8 +51,7 @@ class Database extends DatabaseConnection {
     /**
      * @throws Exception
      */
-    public function __wakeup()
-    {
+    public function __wakeup() {
         throw new Exception("Cannot unserialize a singleton.");
     }
 }

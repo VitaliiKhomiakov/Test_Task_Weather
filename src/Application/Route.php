@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Application;
 
-class Route
-{
+class Route {
     private array $routes = [
         '/' => [
             'GET' => [
@@ -20,8 +19,8 @@ class Route
         ],
     ];
 
-    public function getControllerAction(string $path, string $method): ?array
-    {
+    public function getControllerAction(string $path, string $method): ?array {
+        // remove get params from url to prepare route
         $path = preg_replace('/\?.*/', '', $path);
 
         if (isset($this->routes[$path][$method])) {

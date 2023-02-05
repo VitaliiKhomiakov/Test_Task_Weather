@@ -13,18 +13,18 @@ use Infrastructure\Common\Request;
 use Infrastructure\Database\Database;
 use Infrastructure\Persistence\CityRepository;
 
-class DependencyContainer
-{
+class DependencyContainer {
     private Request $request;
     private Database $database;
 
-    public function __construct()
-    {
+    public function __construct() {
+        // create a container with required dependencies
         $this->request = new Request(
             new GetParameters($_GET),
             new PostParameters($_POST)
         );
 
+        // init database connection
         $this->database = Database::connect(
             new DatabaseConfigDTO([
                 'user' => Config::USER_DB,

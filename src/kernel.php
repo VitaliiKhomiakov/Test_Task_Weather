@@ -21,11 +21,14 @@ if ($controllerAction === null) {
 
 $container = new DependencyContainer();
 $controllerClass = $controllerAction['controller'];
-$controller = new $controllerClass($container);
-
+// get name of action
 $action = $controllerAction['action'];
 
+// init controller
+$controller = new $controllerClass($container);
+
 try {
+    // call controller method
     $controller->$action();
 } catch (RuntimeException $exception) {
     http_response_code(400);
