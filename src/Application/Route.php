@@ -21,7 +21,7 @@ class Route {
 
     public function getControllerAction(string $path, string $method): ?array {
         // remove get params from url to prepare route
-        $path = preg_replace('/\?.*/', '', $path);
+        $path = $this->processUrl($path);
 
         if (isset($this->routes[$path][$method])) {
             return [
@@ -31,5 +31,11 @@ class Route {
         }
 
         return null;
+    }
+
+    private function processUrl($path): string {
+        $path = preg_replace('/\?.*/', '', $path);
+        $baseUrl = preg_replace("/^(https?:\/\/)([^\/]+)(.*)$/i", "$3", \Config::BASE_URL);
+        return str_replace($baseUrl, '/', $path);
     }
 }

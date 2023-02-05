@@ -2,7 +2,7 @@
 
 final class Config
 {
-    const BASE_URL = '/';
+    const BASE_URL = 'http://localhost/app/api/';
     const DEBUG = true;
 
     const USER_DB = 'root';
