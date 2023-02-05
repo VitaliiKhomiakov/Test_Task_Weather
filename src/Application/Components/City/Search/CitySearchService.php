@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\City\Search;
+namespace Application\Components\City\Search;
 
 use Infrastructure\Persistence\CityRepository;
 

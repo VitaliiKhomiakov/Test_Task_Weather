@@ -8,13 +8,13 @@ class Route
     private array $routes = [
         '/' => [
             'GET' => [
-                'controller' => 'Application\Home\HomeController',
+                'controller' => 'Application\Components\Home\HomeController',
                 'action' => 'home'
             ],
         ],
         '/city/search' => [
             'GET' => [
-                'controller' => 'Application\City\Search\CitySearchController',
+                'controller' => 'Application\Components\City\Search\CitySearchController',
                 'action' => 'search'
             ],
         ],

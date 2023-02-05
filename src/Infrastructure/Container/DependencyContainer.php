@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Infrastructure\Container;
 
-use Application\City\Search\CitySearchService;
+use Application\Components\City\Search\CitySearchService;
+use Application\Components\City\Validate\CityValidator;
 use Application\DTO\DatabaseConfigDTO;
 use Config;
 use Infrastructure\Common\GetParameters;
@@ -48,5 +49,9 @@ class DependencyContainer
 
     public function getCitySearchService(): CitySearchService {
         return new CitySearchService($this->getCityRepository());
+    }
+
+    public function getCityValidator(): CityValidator {
+        return new CityValidator();
     }
 }

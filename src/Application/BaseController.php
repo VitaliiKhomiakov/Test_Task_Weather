@@ -17,6 +17,9 @@ abstract class BaseController {
         header('Content-Type: application/json; charset=utf-8');
 
         foreach ($object as &$item) {
+            if (!is_object($item)) {
+                continue;
+            }
             $reflectionClass = new ReflectionClass($item);
             $properties = $reflectionClass->getProperties();
 
@@ -25,7 +28,7 @@ abstract class BaseController {
                 $property->setAccessible(true);
                 $value = $property->getValue($item);
                 if (is_object($value)) {
-                    $array[$property->getName()] = self::toArray($value);
+                    $array[$property->getName()] = (array) $value;
                 } else {
                     $array[$property->getName()] = $value;
                 }

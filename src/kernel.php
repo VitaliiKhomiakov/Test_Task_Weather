@@ -15,7 +15,7 @@ $controllerAction = $route->getControllerAction($_SERVER['REQUEST_URI'], $_SERVE
 
 if ($controllerAction === null) {
     http_response_code(404);
-    echo 'Route not found';
+    echo json_encode(['error' => 'Route not found']);
     exit();
 }
 
@@ -24,4 +24,11 @@ $controllerClass = $controllerAction['controller'];
 $controller = new $controllerClass($container);
 
 $action = $controllerAction['action'];
-$controller->$action();
+
+try {
+    $controller->$action();
+} catch (RuntimeException $exception) {
+    http_response_code(503);
+    echo json_encode(['error' => $exception->getMessage()]);
+    die();
+}
