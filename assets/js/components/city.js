@@ -6,11 +6,14 @@ export class City {
     #city;
     #resetCityButton;
     #weatherService;
+    #searchService;
     #weatherComponent;
     #submitButton;
 
     constructor(searchService, weatherService, weatherComponent) {
         this.#weatherService = weatherService;
+        this.#searchService = searchService;
+
         this.#weatherComponent = weatherComponent;
 
         // init items
@@ -21,28 +24,31 @@ export class City {
         this.#submitButton = document.getElementById('submit');
 
         // send a request when the user finishes typing
-        const debouncedFunction = this.#debounce(async () => {
-            const cities = await searchService.search(this.#searchInput.value);
-            this.addCities(cities);
-        }, 700);
+        const debouncedFunction = this.#debounce(async () => this.loadCities(), 700);
 
         this.#resetCityButton.addEventListener('click', () => this.#cityList.innerHTML = '');
         this.#searchInput.addEventListener('input', debouncedFunction);
-        this.#submitButton.addEventListener('click', () => debouncedFunction);
+        this.#submitButton.addEventListener('click', () => this.loadCities());
     }
 
     // display found cities
     addCities(cities) {
         this.#resetContent();
 
-        if (!cities.length) {
+        if (!cities?.length) {
             this.#cityList.innerHTML = 'Nothing found';
+            return;
         }
 
         cities.forEach(city => {
             const cityModel = new CityModel(city);
             this.#cityList.appendChild(this.#createCityItem(cityModel));
         });
+    }
+
+    // load data from API
+    loadCities() {
+        this.#searchService.search(this.#searchInput.value).then(cities => this.addCities(cities));
     }
 
     // load data from open-meteo.com
