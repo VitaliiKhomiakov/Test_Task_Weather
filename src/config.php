@@ -2,8 +2,8 @@
 
 final class Config
 {
-    const BASE_URL = 'http://localhost/app/api/';
-    const DEBUG = true;
+    const BASE_URL = '/';
+    const DEBUG = false;
 
     const USER_DB = 'root';
     const PASS_DB = '900800';
