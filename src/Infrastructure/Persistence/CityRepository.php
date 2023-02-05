@@ -19,10 +19,13 @@ class CityRepository extends Repository
     public function search(string $searchText, int $limit = 5): array
     {
         $query = $this->connection->getConnection()
-            ->prepare('SELECT `id`, `city`, `lat`, `lng`, `country` 
-                FROM `city` WHERE SOUNDEX(`city`.`city`) = SOUNDEX(:city) LIMIT :limit');
+            ->prepare('SELECT `city`.`id`, `city`.`city`, `city`.`lat`, `city`.`lng`, `city`.`country` 
+                FROM `city` WHERE
+                `city`.`city` LIKE :rLike OR
+                SOUNDEX(`city`.`city`) = SOUNDEX(:city) LIMIT :limit');
 
         $query->bindValue('city', $searchText);
+        $query->bindValue('rLike', $searchText . '%');
         $query->bindValue('limit', $limit, PDO::PARAM_INT);
         $query->execute();
 
